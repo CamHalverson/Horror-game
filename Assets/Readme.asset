@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcf7219bab7fe46a1ad266029b2fee19, type: 3}
+  m_Name: Readme
+  m_EditorClassIdentifier: 
+  icon: {fileID: 2800000, guid: 73635a3462f7dca498f7f4c1e4b4481e
+, type: 3}
+  title: Backrooms Open Source
+  sections:
+  - heading: 'Welcome! '
+    text: "This project is IEP_Esy's Backrooms game. Feel free to edit, mod or change the project in any way you like; but you must credit IEP_Esy or link the game page which is below:"
+    linkText: 'Backrooms by IEP_Esy on itch.io'
+    url: https://iep-esy.itch.io/backrooms 
+  - heading: 'WARNING! '
+    text: "Before you continue, you'll need to know about Unity engine and specially Unity Editor in order to use this project. I'm not a pro Unity developer so my codes are dirty and unclear. Be careful while changing anything so that the game won't break. I suggest you make a backup copy of the whole project just in case. If you can't find anything or just want to know more about the project, contact my e-mail:"
+    linkText: 'IEP78Esy@gmail.com'
+    url: mailto://iep78esy@gmail.com
+  - heading: 'Modding '
+    text: "Monsters (or friends) are 3D prefabs spawned behind or infront of the player. If you wish to change them, you must apply your new objects to player's script in the Main scene. See current prefabs at /Assets/=Prefabs=/. Also, sounds made by friends can be edited in the Player.cs code in Main scene. Current sounds can be found at /Assets/=Sounds=/."
+    linkText:
+    url:
+  - heading:
+    text: "Please note that scene's current lighting setting don't support lighting on dynamic objects. If you don't understand what that means or how to make them have lighting; please learn about Unity's lightmap system:"
+    linkText: Unity documentation on lightmapping
+    url: https://docs.unity3d.com/Manual/Lightmapping.html
+  - heading: 'Scripts '
+    text: "The game has 2 main script in the gameplay; IntroController.cs which controls the intro cutscene when the player is deactivated, and Player.cs which is activated after the cutscene to maintain control of the game."
+    linkText:
+    url:
+  - heading:
+    text: "In the menu however, there is one script controlling the whole UI, and one formatter script for statistics. All of Gamejolt API and IEP News codes are removed for security purposes. Happy modding!"
+    linkText: Don't forget to share your creations!
+    url: https://iep-esy.itch.io/backrooms-open-source/community
+  loadedLayout: 1
