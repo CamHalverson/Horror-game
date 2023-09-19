@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
     CharacterController cc;
@@ -12,6 +14,11 @@ public class PlayerController : MonoBehaviour
     Vector3 curMoveInput;
     Vector3 moveDir;
 
+    public Camera playerCamera;
+    public float lookspeed = 2f;
+    public float lookXLimit = 45f;
+    float rotationX = 0;
+
     public float moveSpeed = 1.0f;
     public float gravity = 9.81f;
     public float instantaniousJumpVel = 10f;
@@ -19,6 +26,11 @@ public class PlayerController : MonoBehaviour
     bool isJumping;
     float curJumpTime;
     float jumpTimeDuration = 0.11f;
+
+    public bool canMove = true;
+
+    bool isPunching;
+    bool isKicking;
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +69,12 @@ public class PlayerController : MonoBehaviour
 
         GameManager.Instance.input.Keyboard.Jump.performed += ctx => JumpPressed(ctx);
         GameManager.Instance.input.Keyboard.Jump.canceled += ctx => JumpReleased(ctx);
+
+        GameManager.Instance.input.Keyboard.Attack1.performed += ctx => Attack1(ctx);
+        GameManager.Instance.input.Keyboard.Attack1.canceled += ctx => Attack1(ctx);
+
+        GameManager.Instance.input.Keyboard.Attack2.performed += ctx => Attack2(ctx);
+        GameManager.Instance.input.Keyboard.Attack2.canceled += ctx => Attack2(ctx);
     }
 
     private void JumpPressed(InputAction.CallbackContext ctx)
@@ -71,6 +89,36 @@ public class PlayerController : MonoBehaviour
     private void JumpReleased(InputAction.CallbackContext ctx)
     {
         isJumping = false;
+    }
+
+    private void Attack1(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            isPunching = true;
+            anim.SetFloat("Punching", 1.0f);
+        }
+        else if(ctx.canceled)
+        {
+            isPunching = false;
+            anim.SetFloat("Punching", 0.0f);
+        }
+       
+    }
+
+    private void Attack2(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            isKicking = true;
+            anim.SetFloat("Kicking", 1.0f);
+        }
+        else if (ctx.canceled)
+        {
+            isKicking = false;
+            anim.SetFloat("Kicking", 0.0f);
+        }
+        
     }
 
     private void Move(InputAction.CallbackContext ctx)
@@ -108,5 +156,27 @@ public class PlayerController : MonoBehaviour
             curMoveInput.y += -gravity * Time.deltaTime;
 
         cc.Move(curMoveInput);
+
+        #region
+        Vector3 forward = transform.TransformDirection(Vector3.forward);
+        Vector3 right = transform.TransformDirection(Vector3.right);
+
+        #endregion
+
+        #region 
+
+        cc.Move(moveDir * Time.deltaTime);
+
+        if (canMove)
+        {
+            rotationX += -Input.GetAxis("Mouse Y") * lookspeed;
+            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookspeed, 0);
+        }
+
+        #endregion
     }
+
+
 }
